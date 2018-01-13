@@ -1,5 +1,5 @@
 {
-  "name": "401 labs",
+  "name": "401",
   "version": "1.0.0",
   "description": "npm i -S express body-parser morgan cors http-errors mongoose dotenv mongodb bluebird npm i -D jest superagent",
   "main": "index.js",

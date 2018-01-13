@@ -1,57 +1,63 @@
 'use strict';
 
+require('dotenv').config();
+
+// Dynamic Script and Style Tags
 const HTMLPlugin = require('html-webpack-plugin');
+
+// Makes a separate CSS bundle
 const ExtractPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
-  devtool: 'source-map',
-  
-  entry: `${__dirname}/src/main.js`,
+const {EnvironmentPlugin, DefinePlugin} = require('webpack');
 
-  devServer: {
-    historyApiFallback: true, // server index.html for 404 routes
-  },
-    
-  output: {
-    filename: 'bundle.[hash].js',
-    path: `${__dirname}/build`,
-  },
-    
-  plugins: [
-    new HTMLPlugin(),
+let production = process.env.NODE_ENV === "production";
+
+let plugins = [
+    new HTMLPlugin({
+        template: `${__dirname}/src/index.html`
+    }),
     new ExtractPlugin('bundle.[hash].css'),
-  ],
-    
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-      },  
-      {
-        test: /\.scss$/,
-        loader: ExtractPlugin.extract({
-          use: [
+    new EnvironmentPlugin(['NODE_ENV']),
+    new DefinePlugin({
+        '__API_URL__': JSON.stringify(process.env.API_URL),
+        '__DEBUG__': JSON.stringify(! production)
+    })
+];
+
+module.exports = {
+
+    plugins,
+
+    // Load this and everythning it cares about
+    entry: `${__dirname}/src/main.js`,
+
+    devServer: {
+        historyApiFallback:true
+    },
+
+    devtool: 'source-map',
+
+    // Stick it into the "path" folder with that file name
+    output: {
+        filename: 'bundle.[hash].js',
+        path: `${__dirname}/build`
+    },
+
+    module: {
+        rules: [
+            // If it's a .js file not in node_modules, use the babel-loader
             {
-              loader: 'css-loader', 
-              options: {
-                sourceMap:true,
-              },
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
             },
-            'resolve-url-loader',
+            // If it's a .scss file
             {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true,
-                includePaths:[`${__dirname}/src/style`],
-              },
+                test: /\.scss$/,
+                loader : 'style-loader!css-loader!sass-loader'
             },
-          ],
-        }),
-      },
-            
-    ],
-  },
-    
-};
+
+        ]
+    }
+
+}
