@@ -1,7 +1,5 @@
 'use strict';
 
-// http://localhost/api/todo
-
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const requireDir = require('require-dir');
@@ -103,8 +101,8 @@ apiRouter.delete('/api/:model/:id', (req,res,next) => {
         let id = req.params.id;
 
         model.remove({_id:id})
-            .then( () => res.send("Record Deleted") )
-            .catch({statusCode:500,message:"I have no idea whats wrong"})
+            .then( () => res.send("Record Deleted Successfully") )
+            .catch({statusCode:500,message:"Please try again"})
 
     }
     catch(e) {
