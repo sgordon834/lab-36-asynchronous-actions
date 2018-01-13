@@ -10,6 +10,11 @@ const models = requireDir(__dirname + '/../models/');
 
 const apiRouter = module.exports = express.Router();
 
+apiRouter.get('/test', (req, res, next) => {
+    console.log('WORK PLEASE');
+    res.end();
+})
+
 apiRouter.get('/api/:model', (req,res,next) => {
 
     try {
@@ -48,7 +53,7 @@ apiRouter.get('/api/:model/:id', (req,res,next) => {
 
 
 apiRouter.post('/api/:model', jsonParser, (req,res,next) => {
-
+console.log('POST ROUTE')
     try {
 
         let model = getModel(req);

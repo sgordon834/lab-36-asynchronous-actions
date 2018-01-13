@@ -1,9 +1,10 @@
 import uuid from 'uuid/v1'
 import superagent from 'superagent';
 
-let API = `${__API_URL__}/todo`;
+let API = `${__API_URL__}/api/todo`;
 
 export const todoInitialize = () => dispatch => {
+    console.log(API, 'API -actions line 9')
 
     superagent.get(API)
         .then(res => dispatch(initAction(res.body)) )

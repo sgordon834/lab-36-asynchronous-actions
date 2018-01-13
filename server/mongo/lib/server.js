@@ -28,6 +28,7 @@ module.exports = {
 
     start: (port) => {
         let usePort = port || process.env.SERVER_PORT;
+        console.log("Trying Port", process.env.SERVER_PORT);
         if ( isRunning ) {
             throw Error ("Server is already running");
         }
