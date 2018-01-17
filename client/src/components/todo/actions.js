@@ -4,7 +4,7 @@ import superagent from 'superagent';
 let API = `${__API_URL__}/api/todo`;
 
 export const todoInitialize = () => dispatch => {
-    console.log(API, 'API -actions line 9')
+    // console.log(API, 'API -actions line 9')
 
     superagent.get(API)
         .then(res => dispatch(initAction(res.body)) )
@@ -36,9 +36,22 @@ export const todoUpdate = payload => dispatch => {
 
 export const todoDelete = payload => dispatch => {
 
-    dispatch( deleteAction(payload) );
+    let URL = `${API}/${payload._id}`
+
+    superagent.delete(URL)
+        .send(payload)
+        .then(res => dispatch(deleteAction(res.body)))
+        .catch(console.error);
+
+    // dispatch( deleteAction(payload) );
 
 }
+
+// export const todoDelete = payload => dispatch => {
+
+//     dispatch( deleteAction(payload) );
+
+// }
 
 const initAction = list => ({
    type: 'INIT',

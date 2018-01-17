@@ -46,7 +46,10 @@ class TodoItem extends React.Component {
                     this.state.editing
 
                     ?
+                        <div>
                         <TodoForm todo={this.props.item} handler={this.props.updateHandler} toggle={this.toggleEditState} />
+                        <a href='#' onClick={() => this.props.deleteHandler(this.props.item)}>Delete</a>
+                        </div>
                     :
 
                         this.props.item.task

@@ -13,6 +13,7 @@ class TodoForm extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     handleChange(e) {
@@ -29,6 +30,7 @@ class TodoForm extends React.Component {
         this.setState({task:''});
     }
 
+
     render() {
 
         return (
@@ -44,6 +46,7 @@ class TodoForm extends React.Component {
                 />
 
                 <button type="submit">Save Item</button>
+                <a href='#' onClick={this.handleDelete}>Delete</a>
 
             </form>
         )
