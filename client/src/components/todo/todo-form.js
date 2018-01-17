@@ -46,7 +46,7 @@ class TodoForm extends React.Component {
                 />
 
                 <button type="submit">Save Item</button>
-                <a href='#' onClick={this.handleDelete}>Delete</a>
+               
 
             </form>
         )
